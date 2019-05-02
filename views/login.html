@@ -1,69 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../public/test/css/common.css">
+    <link rel="stylesheet" href="../public/test/css/index.css">
+</head>
+<body>
+<!--头部区域-->
+{{include 'particals/header.html'}}
+<!--登陆框-->
+<section class="login-wrapper">
 
-{{extend './layout/main.html'}}<!--继承-->
-
-{{block 'context' }}<!--填坑-->
-
-
-    <link href="/public/css/login.css" rel="stylesheet" type="text/css" />
-    <div id="wrapper">
-        <div class="aw-login-box">
-            <div class="mod-body clearfix">
-                <div class="content pull-left">
-                    <h1 class="logo"><a href=""></a></h1>
-                    <h2></h2>
-                    <form action="/" method="post" id="login_form">
-                        <ul>
-                            <li>
-                                <input type="text" id="aw-login-user-name" class="form-control" placeholder="用户名" name="username" value="" />
-                            </li>
-                            <li>
-                                <input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password" value="" />
-                            </li>
-                            <li class="alert alert-danger hide error_message">
-                                <i class="icon icon-delete"></i> <em></em>
-                            </li>
-                            <li class="last">
-                                <input type="submit" class="pull-right btn btn-large btn-primary" value="登录">
-                                <label>
-                                    <input type="checkbox" value="1" name="remember_me" /> 记住我 </label>
-                                <a href="http://wenda.golaravel.com/account/find_password/">&nbsp;&nbsp;忘记密码</a>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-                <div class="side-bar pull-left">
-                    <img src="/public/img/a.png" style="width: 160px">
-                </div>
+    <div class="log">
+        <div class="clear">
+            <div class="log-le">
+                <div><a href="#" class="icon"></a></div>
+                <form action="" id="commentForm">
+                    <ul class="log-form">
+                        <li class="username"><input type="text" placeholder="用户名" name="username" id="username"></li>
+                        <li class="password"><input type="password" placeholder="密码" name="password" id="password" ></li>
+                        <li>
+                            <input type="radio">记住我
+                            <a href="#">忘记密码</a>
+                            <button class="submit" type="submit"> 登录</button>
+                        </li>
+                    </ul>
+                </form>
             </div>
-            <div class="mod-footer">
-                <span>还没有账号?</span>&nbsp;&nbsp;
-                <a href="/register">立即注册</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+
+            <div class="log-ri">
+                <a href="#"><img src="../public/test/image/a.png" alt=""></a>
             </div>
         </div>
+        <div class="botti">
+            <span>还没有账号?</span>
+            <a href="/register">立即注册</a>
+        </div>
     </div>
-    <script>
-      $('#login_form').on('submit', function (e) {
-        // 阻止默认时间
-        e.preventDefault();
-        // 表单数据
-        var formData = $(this).serialize(); // username=xxx&email=xxx..
 
-        $.ajax({
-          url: '/user/do-login',
-          type: 'post',
-          data: formData,
-          dataType: 'json',
-          success: function (data) {
-            if(data.code==='001') {
-              // 注册成功，是否去登陆
-              if(confirm('登录成功，是否去听歌？')) {
-                window.location = '/music/index'
-              }
-            }else {
-              alert('登录失败：'+ data.msg)
-            }
-          }
-        })
-      })
-    </script>
-{{/block}}
+</section>
+
+
+</body>
+
+
+<script src="../public/test/js/jquey1.11.1.js"></script>
+<script src="../public/test/js/jquery-validation-1.14.0/dist/jquery.validate.js"></script>
+<script src="../public/test/js/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script src="../public/test/js/index.js"></script>
+</html>

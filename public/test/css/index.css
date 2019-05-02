@@ -1,0 +1,93 @@
+.head {
+    width: 100%;
+    background-color: #FF6964;
+    padding: 10px 0;
+}
+.container{
+    width: 80%;
+    text-align: right;
+    margin: 0 auto;
+
+}
+.container button{
+    border: none;
+    outline: none;
+    height: 32px;
+    font-size: 16px;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+}
+.login{
+    background-color: #00B1FF;
+    margin-right: 10px;
+}
+.sign{
+    background-color: #00C162;
+}
+.login-wrapper {
+    background-color: #F3F3F3;
+    padding: 60px 0;
+}
+.log{
+    width: 712px;
+    border: 1px solid;
+    margin: 0 auto;
+    background-color: #fff;
+}
+.clear {
+    overflow: hidden;
+    padding: 50px 60px 0;
+}
+.log-le{
+    float: left;
+    padding-right: 60px;
+}
+.icon {
+    display: inline-block;
+    height: 94px;
+    width: 150px;
+    background: url("../image/Laravel-Four-Revised-Icon.png") no-repeat left center;
+    background-size: contain;
+    margin-bottom: 20px;
+}
+.log-form li{
+    margin-top: 20px;
+    position: relative;
+}
+.log-form li:first-child input,.log-form li:nth-child(2) input{
+    width: 300px;
+    height: 40px;
+    padding: 6px 6px 6px 15px;
+}
+.submit{
+    margin-left: 90px;
+    width: 100px;
+    border: none;
+    outline: none;
+    height: 32px;
+    font-size: 16px;
+    color: white;
+    background-color: #00B1FF;
+    border-radius: 5px;
+}
+.log-ri {
+    float: left;
+    padding: 60px 0 60px 60px;
+    border-left: 2px solid #E6E6E6 ;
+}
+.log-ri img {
+    width: 150px;
+}
+.botti {
+    margin-top: 50px;
+    height: 40px;
+    background-color: #E6E6E6;
+    line-height: 40px;
+    padding-left: 60px;
+}
+p.error {
+   position: absolute;
+    font-weight: bold;
+    color: #EA5200;
+}
