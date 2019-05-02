@@ -18,6 +18,16 @@
     width: 80px;
     border-radius: 5px;
 }
+.tc{
+    border: none;
+    outline: none;
+    height: 32px;
+    font-size: 16px;
+    background-color: yellow;
+    color: #000000 !important;
+    width: 80px;
+    border-radius: 5px;
+}
 .login{
     background-color: #00B1FF;
     margin-right: 10px;

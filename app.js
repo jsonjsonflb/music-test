@@ -43,9 +43,9 @@ app.use(error())
 let rewriteUrl = require('./middleware/rewriteUrl');
 
 app.use(rewriteUrl([
-  {regex:/\/abc/,dist:'/user/login'},
+  {regex:/\/abc/,dist:'/login'},
   {regex:/\/public(.*)/,dist:null }, // dist:null 则使用.*  /public的内容
-  {src:'/',dist:'/user/login'}
+  {src:'/',dist:'/login'}
 ]));
 
 

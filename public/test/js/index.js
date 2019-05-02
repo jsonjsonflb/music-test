@@ -19,6 +19,10 @@ $.validator.setDefaults({
                 if (result.code === '002') {
                     alert(result.msg);
                 }
+                if (result.code === '001') {
+                    alert(result.msg);
+                    window.location.href='/home';
+                }
             },
             error: function (xhr, staus, error) {
                 console.log(error);
@@ -48,7 +52,7 @@ $().ready(function () {
         //定义规则
         rules: {
             username: {required: true,rangelength:[2,20]},
-            password: {required: true, isPwd: true}
+            password: {required: true}
         },
         //错误消息的提示内容
         messages: {

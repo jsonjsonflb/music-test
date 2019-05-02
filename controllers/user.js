@@ -140,6 +140,6 @@ module.exports = {
    * 2. 重定向页面到login页面*/
   logout(ctx, next) {
     ctx.session.user = null;
-    ctx.redirect('/user/login')
+    ctx.redirect('/login')
   }
 }
