@@ -17,10 +17,14 @@ $.validator.setDefaults({
             data: formData,
             success: function (result, staus, xhr) {
                 if (result.code === '002') {
-                    alert(result.msg);
+                    showDiv({
+                        conn: result.msg, width: '300px'
+                    });
                 }
                 if (result.code === '001') {
-                    alert(result.msg);
+                    showDiv({
+                        conn: result.msg, width: '300px'
+                    });
                     window.location.href='/home';
                 }
             },
