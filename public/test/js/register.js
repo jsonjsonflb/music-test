@@ -34,15 +34,18 @@ $.validator.setDefaults({
             success: function (result, staus, xhr) {
                 console.log(staus);
                 if (result.code === '002') {
-                    alert(result.msg);
-                   getyzm();
+                    showDiv({
+                        conn: result.msg, width: '300px'
+                    });
+
+                    getyzm();
                     return;
                 }
                 if (result.code === '001') {
                     confirm(result.msg);
                 }
             },
-            error: function(xhr, staus, error){
+            error: function (xhr, staus, error) {
 
             },
             complete: function () {
@@ -52,6 +55,6 @@ $.validator.setDefaults({
     }
 });
 
-function getyzm(){
+function getyzm() {
     $(".yzm").attr("src", "/user/get-pic?i" + new Date().getTime());
 }

@@ -1,0 +1,53 @@
+.ele_dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    background-color: rgba(0,0,0,.2);
+    z-index: 2003;
+}
+.mandiv{
+    position: relative;
+    margin: 100px auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    width:50%;
+}
+.heddiv {
+    padding: 20px;
+}
+
+.el_zt{
+    font-size: 20px;
+}
+.closediv{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #0D8BBD;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.middiv {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    padding: 60px 20px;
+   text-indent: 2em;
+}
+.commdiv{
+    text-align: right;
+    padding: 20px 20px 20px 0;
+}
+.commbtn {
+    background: #0D8BBD;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+}
