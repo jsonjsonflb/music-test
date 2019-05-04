@@ -1,9 +1,28 @@
 {{extend './layout/main.html'}}
+{{block 'head'}}
+<link rel="stylesheet" href="../public/test/css/home.css">
+<script src="../public/test/js/home.js"></script>
+{{/block}}
 {{block 'content'}}
 
-
-
-
-
-
+<section class="photos">
+    <div class="ph_lo">
+        <button>上传照片</button>
+        <button>创建相册</button>
+        <button>展示设置</button>
+    </div>
+    <div class="ph_man">
+        <ul>
+            <li class="ph_li">
+                <div class="ph_div">
+                    <a href=""><img src="/public/test/image/a.png" alt="" class="pt_image"></a>
+                    <span class="amonts">3</span>
+                </div>
+                <div class="ph_sp">
+                    <a href="">这个是描述</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
 {{/block}}
