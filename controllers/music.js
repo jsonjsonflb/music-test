@@ -147,7 +147,44 @@ module.exports = {
       });
     });
 
-    let data = await musicModel.addPicyByObj(dataLIst);
-    console.log(data);
+    let result = await musicModel.addPicyByObj(dataLIst);
+    if (result.affectedRows) {
+      ctx.body = {
+        code: '001',
+        msg: '成功上传' + result.affectedRows + '张图片'
+      };
+    } else {
+      ctx.body = {
+        code: '002',
+        msg: result.messages
+      };
+    }
+  },
+  /**
+   *
+   * @param {*} ctx
+   * @param {*} next
+   */
+  // 获取图片
+  async getPicture(ctx, next) {
+   
+    let { picType } = ctx.request.body;
+    console.log(ctx.request.body)
+    // 通过id查找图片
+    let uid = ctx.session.user.id;
+    let searchConditin = {uid: uid, picType: picType}
+    let pictures = await musicModel.findPictureById(searchConditin);
+
+    if(pictures.length===0) {
+      ctx.body = {
+        code: '002',
+        msg: '暂无数据'
+      };
+    }
+    ctx.body = {
+      code: '001',
+      data: pictures,
+      msg: ''
+    };
   }
 };

@@ -21,12 +21,18 @@ module.exports = {
     var sql = '';
     let flag = '';
     for (let i = 0; i < list.length; i++) {
-      let flag = await db.q(
-        'insert into photo (picLink, picType, uid, title, content, createTime) values (?,?,?,?,?,?)' +
-          sql,
+      flag = await db.q(
+        'insert into photo (picLink, picType, uid, title, content, createTime) values (?,?,?,?,?,?)',
         Object.values(list[i])
       );
     }
     return flag;
+  },
+  findPictureById: async (obj) =>{
+    let sql='select * from photo where uid = ? '
+    if(obj['picType']) {
+      sql+='and picType = ?'
+    }
+    return await db.q(sql,Object.values(obj))
   }
 };

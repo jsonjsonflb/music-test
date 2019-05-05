@@ -7,6 +7,7 @@ const musicController = require('../controllers/music')
 musicRouter
 .post('/music/add-music',musicController.addMusic)
 .post('/upload/add-picture',musicController.addPicture)
+.post('/picture/get-picture',musicController.getPicture)
 .put('/music/update-music',musicController.updateMusic)
 .delete('/music/del-music',musicController.deleteMusic)
 .get('/music/index', musicController.showIndex)

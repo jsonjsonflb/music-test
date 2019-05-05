@@ -16,13 +16,22 @@
     </div>
     <button id="submit" class="commit">提交</button>
   </div>
+  <select id="picType">
+    <option value ="1">相册1</option>
+    <option value ="2">相册2</option>
+    <option value="3">相册3</option>
+    <option value="4">相册4</option>
+    <option value="5">相册5</option>
+  </select>
+  <button onclick="searchPicture()">查询</button>
+  <ul class="content-img-list" id="show-img-list">
+    <!-- <li class="content-img-list-item"><img src="https://www.baidu.com/img/bd_logo1.png" alt=""><a class="delete-btn"><i class="ico-delete"></i></a></li> -->
+  </ul>
 </section>
 
 <script>
 
   var imgName=[],imgSrc=[],imgFile=[];
-
-
   // 生成图片的可视地址
   function getObjectURL(file) {
     var url = null ;
@@ -102,7 +111,6 @@
     //   console.log('myFile[]',i,formFile)
     // });
     imgFile.forEach(function (item, index) {
-      console.log(item)
       formFile.append('file'+index, item);
     });
     formFile.append('picType', '1');
@@ -122,9 +130,35 @@
     })
 
   })
-
-
-
+  
+  // 查询图片
+  function searchPicture() {
+    let picType =$('#picType').val();
+    console.log(picType)
+    $.ajax({
+      url: '/picture/get-picture',
+      type: 'post',
+      data: 'picType='+picType,
+      dataType:'json',
+      success: function(res) {
+        if(res.code==='001') {
+          showPictures(res.data)
+        };
+      }
+    })
+  }
+  // 显示已上传的图片
+  /**
+   * arr 图片列表
+  */
+  function showPictures(arr) {
+    if(arr.length===0) return;
+    let content='';
+    arr.forEach(item=>{
+      content += `<li><img src="${item.picLink}" alt=""></li>`
+    })
+    $('#show-img-list').html(content)
+  }
 </script>
 {{/block}}
 
