@@ -25,7 +25,7 @@ $.validator.setDefaults({
                     showDiv({
                         conn: result.msg, width: '300px'
                     });
-                    window.location.href='/home';
+                    window.location.href='/upload';
                 }
             },
             error: function (xhr, staus, error) {

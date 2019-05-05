@@ -6,6 +6,7 @@ const musicController = require('../controllers/music')
   // 要求添加 => post
 musicRouter
 .post('/music/add-music',musicController.addMusic)
+.post('/upload/add-picture',musicController.addPicture)
 .put('/music/update-music',musicController.updateMusic)
 .delete('/music/del-music',musicController.deleteMusic)
 .get('/music/index', musicController.showIndex)
@@ -13,5 +14,6 @@ musicRouter
     ctx.render('add')
 })
 .get('/music/edit', musicController.showEdit)
+.get('/upload', musicController.showPicUpload);
 
 module.exports = musicRouter;
