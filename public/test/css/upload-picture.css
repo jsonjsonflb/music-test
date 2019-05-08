@@ -1,3 +1,4 @@
+.multifile-image{overflow: hidden;}
 .content-img{width: 1000px;margin:  0 auto}
 .content-img-list{width: 100%;padding: 5px 0;margin: 0 -5px;overflow: hidden}
 .content-img-list li{width: 225px;height: 225px;padding: 0 5px;float: left;position: relative;overflow: hidden}
@@ -7,3 +8,13 @@
 .file{width: 25%;padding: 0 5px;}
 .file .ico-plus{background-color: red;cursor: pointer;padding: 10px}
 .file #upload{opacity: 0}
+
+.upload-image{padding: 50px 100px;margin-top: 50px}
+#uploadImageByCode{}
+#file{
+    visibility: hidden;height: 0;
+}
+.upload-btn{
+    width: 100px;height: 50px;cursor: pointer;
+}
+#imageCode-error{color: red;margin-left: 10px}

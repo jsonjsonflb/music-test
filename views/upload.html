@@ -1,24 +1,24 @@
 {{extend './layout/main.html'}}
 {{block 'head'}}
-  <link rel="stylesheet" href="../public/test/css/upload-picture.css">
+<link rel="stylesheet" href="../public/test/css/upload-picture.css" />
 {{/block}}
 
 {{block 'content'}}
-<section>
+<section class="multifile-image">
   <div class="content-img">
     <ul class="content-img-list" id="content-img-list">
       <!-- <li class="content-img-list-item"><img src="https://www.baidu.com/img/bd_logo1.png" alt=""><a class="delete-btn"><i class="ico-delete"></i></a></li> -->
     </ul>
     <div class="file">
-      <i  onclick="uploadPicFile()" class="ico-plus">X</i>
+      <i onclick="uploadPicFile()" class="ico-plus">X</i>
       上传图片，支持jpg/png
-      <input type="file" name="file" accept="image/*" id="upload">
+      <input type="file" name="file" accept="image/*" id="upload" />
     </div>
     <button id="submit" class="commit">提交</button>
   </div>
   <select id="picType">
-    <option value ="1">相册1</option>
-    <option value ="2">相册2</option>
+    <option value="1">相册1</option>
+    <option value="2">相册2</option>
     <option value="3">相册3</option>
     <option value="4">相册4</option>
     <option value="5">相册5</option>
@@ -29,55 +29,108 @@
   </ul>
 </section>
 
-<script>
+<section class="upload-image">
+  <h1>按code上传文件</h1>
+  <form action="" id="uploadImageByCode">
+    <input type="file" id="file" name="file" accept="image/*" />
+    <br />
+    <label for="file"></label>
+    <button onclick="openUpload()" type="button" class="upload-btn">
+      +点击上传图片
+    </button>
+    <br />
+    <br />
+    <label for="imageCode">图片组code</label>
+    <input type="text" name="imageCode" id="imageCode" />
+    <br />
+    <br />
+    <label for="title">图片标题</label>
+    <input type="text" name="title" id="title" />
+    <br />
+    <br />
+    <label for="content">图片描述</label>
+    <input type="text" name="content" id="content" />
+    <br />
+    <br />
+    <button type="submit" class="commit">提交</button>
+  </form>
+</section>
+<section class="upload-image">
+    <h1>按code请求文件</h1>
+    <br>
+        <label for="imageCodeIpunt">图片code</label>
+        <br>
+        <br>
+        <input id="imageCodeIpunt" name="imageCode" type="text" >
+        <br>
+        <br>
+        <button id="submit" onclick="searchImageList()" class="commit">提交</button>    
+</section>
 
-  var imgName=[],imgSrc=[],imgFile=[];
+<script>
+  var imgName = [],
+    imgSrc = [],
+    imgFile = [];
   // 生成图片的可视地址
   function getObjectURL(file) {
-    var url = null ;
-    if (window.createObjectURL!=undefined) { // basic
-      url = window.createObjectURL(file) ;
-    } else if (window.URL!=undefined) { // mozilla(firefox)
-      url = window.URL.createObjectURL(file) ;
-    } else if (window.webkitURL!=undefined) { // webkit or chrome
-      url = window.webkitURL.createObjectURL(file) ;
+    var url = null;
+    if (window.createObjectURL != undefined) {
+      // basic
+      url = window.createObjectURL(file);
+    } else if (window.URL != undefined) {
+      // mozilla(firefox)
+      url = window.URL.createObjectURL(file);
+    } else if (window.webkitURL != undefined) {
+      // webkit or chrome
+      url = window.webkitURL.createObjectURL(file);
     }
-    return url ;
+    return url;
   }
 
   // 模拟点击上传
   function uploadPicFile() {
     var upload = document.querySelector('#upload');
-    upload.click()
+    upload.click();
   }
 
   // 展示图片的方法
   function addNewContent() {
-    $('#content-img-list').html("");
-    for(let a = 0; a < imgSrc.length; a++) {
+    $('#content-img-list').html('');
+    for (let a = 0; a < imgSrc.length; a++) {
       var oldBox = $('#content-img-list').html();
-      $('#content-img-list').html(oldBox + '<li class="content-img-list-item"><img src="'+imgSrc[a]+'" alt=""><a index="'+a+'" class="hide delete-btn">删除<i class="ico-delete"></i></a></li>');
+      $('#content-img-list').html(
+        oldBox +
+          '<li class="content-img-list-item"><img src="' +
+          imgSrc[a] +
+          '" alt=""><a index="' +
+          a +
+          '" class="hide delete-btn">删除<i class="ico-delete"></i></a></li>'
+      );
     }
   }
 
-
   // 读取上传的文件
-  $('#upload').on('change', function () {
+  $('#upload').on('change', function() {
     // 控制上传图片大小、格式以及上传数量
-    if(imgSrc.length==4){
-      return alert("最多只能上传4张图片");
+    if (imgSrc.length == 4) {
+      return alert('最多只能上传4张图片');
     }
-    var imgSize = this.files[0].size;  //b
-    if(imgSize>1024*1024*1){//1M
-      return alert("上传图片不能超过1M");
+    var imgSize = this.files[0].size; //b
+    if (imgSize > 1024 * 1024 * 1) {
+      //1M
+      return alert('上传图片不能超过1M');
     }
-    if(this.files[0].type != 'image/png' && this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/gif'){
-      return alert("图片上传格式不正确");
+    if (
+      this.files[0].type != 'image/png' &&
+      this.files[0].type != 'image/jpeg' &&
+      this.files[0].type != 'image/gif'
+    ) {
+      return alert('图片上传格式不正确');
     }
     // 设置图片等数组数据
     var fileList = this.files;
-    console.log(fileList)
-    for(var i = 0; i < fileList.length; i++) {
+    console.log(fileList);
+    for (var i = 0; i < fileList.length; i++) {
       var imgSrcI = getObjectURL(fileList[i]);
       imgName.push(fileList[i].name);
       imgSrc.push(imgSrcI);
@@ -85,24 +138,25 @@
     }
     this.value = null; // 清空当前的图片，以便可以删除后再传
     // 预览图片
-    addNewContent()
-  })
+    addNewContent();
+  });
 
   // 删除对应下标的图片
-  $(".content-img-list").on("click",'.content-img-list-item a',function(){
-    var index = $(this).attr("index");
+  $('.content-img-list').on('click', '.content-img-list-item a', function() {
+    var index = $(this).attr('index');
     imgSrc.splice(index, 1);
     imgFile.splice(index, 1);
     imgName.splice(index, 1);
     addNewContent();
-    if(imgSrc.length<4){//显示上传按钮
+    if (imgSrc.length < 4) {
+      //显示上传按钮
       $('.content-img .file').show();
     }
   });
 
-  $('#submit').on('click', function () {
-    if(imgFile.length===0) {
-      return alert('请选择图片')
+  $('#submit').on('click', function() {
+    if (imgFile.length === 0) {
+      return alert('请选择图片');
     }
 
     var formFile = new FormData();
@@ -110,8 +164,8 @@
     //   formFile.append('myFile[]', file);
     //   console.log('myFile[]',i,formFile)
     // });
-    imgFile.forEach(function (item, index) {
-      formFile.append('file'+index, item);
+    imgFile.forEach(function(item, index) {
+      formFile.append('file' + index, item);
     });
     formFile.append('picType', '1');
 
@@ -123,43 +177,125 @@
       contentType: false, // 告诉jQuery不要去设置Content-Type请求头
       processData: false, // 告诉jQuery不要去处理发送的数据
       // traditional:true,
-      dataType:'json',
+      dataType: 'json',
       success: function(res) {
         console.log(res);
       }
-    })
+    });
+  });
 
-  })
-  
   // 查询图片
   function searchPicture() {
-    let picType =$('#picType').val();
-    console.log(picType)
+    let picType = $('#picType').val();
+    console.log(picType);
     $.ajax({
       url: '/picture/get-picture',
       type: 'post',
-      data: 'picType='+picType,
-      dataType:'json',
+      data: 'picType=' + picType,
+      dataType: 'json',
       success: function(res) {
-        if(res.code==='001') {
-          showPictures(res.data)
-        };
+        if (res.code === '001') {
+          showPictures(res.data);
+        }
       }
-    })
+    });
   }
   // 显示已上传的图片
   /**
    * arr 图片列表
-  */
+   */
   function showPictures(arr) {
-    if(arr.length===0) return;
-    let content='';
-    arr.forEach(item=>{
-      content += `<li><img src="${item.picLink}" alt=""></li>`
-    })
-    $('#show-img-list').html(content)
+    if (arr.length === 0) return;
+    let content = '';
+    arr.forEach(item => {
+      content += `<li><img src="${item.picLink}" alt=""></li>`;
+    });
+    $('#show-img-list').html(content);
   }
+
+  /**
+   * 通过code上传图片
+   */
+
+  // 添加图片
+  function openUpload() {
+    console.log(123);
+    $('#file').trigger('click');
+  }
+
+  // 上传
+  $.validator.setDefaults({
+    submitHandler: function() {
+      var fd = new FormData();
+      var inputs = document
+        .getElementById('uploadImageByCode')
+        .querySelectorAll('input');
+
+        console.log(inputs)
+      // type="file" value就是文件的路径
+
+      fd.append('file', inputs[0].files[0]);
+      fd.append('imageCode', inputs[1].value);
+      fd.append('title', inputs[2].value);
+      fd.append('content', inputs[3].value);      
+
+      $.ajax({
+        url: '/upload/add-pictureByCode',
+        type: 'post',
+        data: fd,
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        // traditional:true,
+        dataType: 'json',
+        success: function(res) {
+          alert(res.msg);
+        }
+      });
+    }
+  });
+
+  // 上传的验证
+  $().ready(function() {
+    //验证表单
+    $('#uploadImageByCode').validate({
+      //改变错误消息的提示位置
+      errorPlacement: function(error, element) {
+        $('#uploadImageByCode ')
+          .find("label[for='" + element.attr('id') + "']")
+          .append(error);
+      },
+      //错误消息的元素的标签类型
+      errorElement: 'span',
+      //定义规则
+      rules: {
+        imageCode: { required: true },
+        file: { required: true }
+      },
+      //错误消息的提示内容
+      messages: {
+        imageCode: { required: '请输入图片组code' },
+        file: { required: '图片必须上传' }
+      }
+    });
+  });
+
+  // searchImageList
+  function searchImageList() {
+      let code = $("#imageCodeIpunt").val()
+      if(code==='') {
+        alert('请输入code') 
+        return
+      };
+
+      $.ajax({
+            url: 'picture/get-pictureByCode',
+            type: 'post',
+            dataType: 'json',
+            data: 'imageCode=' + code,
+            success: function (result, staus, xhr) {
+                console.log(result)
+            }
+        })
+    }
 </script>
 {{/block}}
-
-

@@ -8,6 +8,8 @@ musicRouter
 .post('/music/add-music',musicController.addMusic)
 .post('/upload/add-picture',musicController.addPicture)
 .post('/picture/get-picture',musicController.getPicture)
+.post('/upload/add-pictureByCode',musicController.addPictureByCode)
+.post('/picture/get-pictureByCode',musicController.getPictureByCode)
 .put('/music/update-music',musicController.updateMusic)
 .delete('/music/del-music',musicController.deleteMusic)
 .get('/music/index', musicController.showIndex)

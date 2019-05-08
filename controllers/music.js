@@ -169,7 +169,6 @@ module.exports = {
   async getPicture(ctx, next) {
    
     let { picType } = ctx.request.body;
-    console.log(ctx.request.body)
     // 通过id查找图片
     let uid = ctx.session.user.id;
     let searchConditin = {uid: uid, picType: picType}
@@ -184,6 +183,63 @@ module.exports = {
     ctx.body = {
       code: '001',
       data: pictures,
+      msg: ''
+    };
+  },
+
+  // 根据code上传图片
+  async addPictureByCode(ctx, next) {
+    let { imageCode, title, content } = ctx.request.body;
+    
+    let { file } = ctx.request.files;
+
+    if(!file) {
+      ctx.body = {
+        code: '002',
+        msg: '图片必须上传'
+      };
+    }
+    let picLink = '/public/files/' + path.parse(file.path).base;
+    let createTime = new Date().getTime();
+    let params = {
+      picLink, imageCode, title, content, createTime
+    }
+    console.log(params)
+    let result = await musicModel.uploadImageByCode(params);
+    if (result.affectedRows) {
+      ctx.body = {
+        code: '001',
+        msg: '成功上传'
+      };
+    } else {
+      ctx.body = {
+        code: '002',
+        msg: result.messages
+      };
+    }
+  },
+
+  // 根据code查找图片
+  async getPictureByCode(ctx, next) {
+    let {imageCode} = ctx.request.body;
+    if(!imageCode) {
+      ctx.body = {
+        code: '002',
+        msg: 'code必须'
+      };
+    }
+    
+    let result = await musicModel.searchImageByCode(imageCode);
+
+    if(result.length===0) {
+      ctx.body = {
+        code: '002',
+        msg: '暂无数据'
+      };
+    }
+    ctx.body = {
+      code: '001',
+      data: result,
       msg: ''
     };
   }

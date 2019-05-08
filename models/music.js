@@ -28,11 +28,19 @@ module.exports = {
     }
     return flag;
   },
-  findPictureById: async (obj) =>{
-    let sql='select * from photo where uid = ? '
-    if(obj['picType']) {
-      sql+='and picType = ?'
+  findPictureById: async obj => {
+    let sql = 'select * from photo where uid = ? ';
+    if (obj['picType']) {
+      sql += 'and picType = ?';
     }
-    return await db.q(sql,Object.values(obj))
-  }
+    return await db.q(sql, Object.values(obj));
+  },
+  // 通过code上传图片
+  uploadImageByCode: async obj =>
+    await db.q(
+      'insert into imagesbycode (picLink,imageCode, title, content, createTime) values (?,?,?,?,?)',
+      Object.values(obj)
+    ),
+  searchImageByCode: async code =>
+    await db.q('select * from imagesbycode where imageCode = ?', [code])
 };
