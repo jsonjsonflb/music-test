@@ -25,7 +25,7 @@ $.validator.setDefaults({
                     showDiv({
                         conn: result.msg, width: '300px'
                     });
-                    window.location.href='/home';
+                    window.location.href='/upload';
                 }
             },
             error: function (xhr, staus, error) {
@@ -64,11 +64,4 @@ $().ready(function () {
             password: {required: "请输入密码"}
         }
     });
-
-    $('.jzw').on('click',function () {
-        $('.jzw_i').toggleClass("icon-firstxuanzhong");
-    });
-
-
-
 });

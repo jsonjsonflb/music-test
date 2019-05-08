@@ -1,0 +1,165 @@
+{{extend './layout/main.html'}}
+{{block 'head'}}
+  <link rel="stylesheet" href="../public/test/css/upload-picture.css">
+{{/block}}
+
+{{block 'content'}}
+<section>
+  <div class="content-img">
+    <ul class="content-img-list" id="content-img-list">
+      <!-- <li class="content-img-list-item"><img src="https://www.baidu.com/img/bd_logo1.png" alt=""><a class="delete-btn"><i class="ico-delete"></i></a></li> -->
+    </ul>
+    <div class="file">
+      <i  onclick="uploadPicFile()" class="ico-plus">X</i>
+      上传图片，支持jpg/png
+      <input type="file" name="file" accept="image/*" id="upload">
+    </div>
+    <button id="submit" class="commit">提交</button>
+  </div>
+  <select id="picType">
+    <option value ="1">相册1</option>
+    <option value ="2">相册2</option>
+    <option value="3">相册3</option>
+    <option value="4">相册4</option>
+    <option value="5">相册5</option>
+  </select>
+  <button onclick="searchPicture()">查询</button>
+  <ul class="content-img-list" id="show-img-list">
+    <!-- <li class="content-img-list-item"><img src="https://www.baidu.com/img/bd_logo1.png" alt=""><a class="delete-btn"><i class="ico-delete"></i></a></li> -->
+  </ul>
+</section>
+
+<script>
+
+  var imgName=[],imgSrc=[],imgFile=[];
+  // 生成图片的可视地址
+  function getObjectURL(file) {
+    var url = null ;
+    if (window.createObjectURL!=undefined) { // basic
+      url = window.createObjectURL(file) ;
+    } else if (window.URL!=undefined) { // mozilla(firefox)
+      url = window.URL.createObjectURL(file) ;
+    } else if (window.webkitURL!=undefined) { // webkit or chrome
+      url = window.webkitURL.createObjectURL(file) ;
+    }
+    return url ;
+  }
+
+  // 模拟点击上传
+  function uploadPicFile() {
+    var upload = document.querySelector('#upload');
+    upload.click()
+  }
+
+  // 展示图片的方法
+  function addNewContent() {
+    $('#content-img-list').html("");
+    for(let a = 0; a < imgSrc.length; a++) {
+      var oldBox = $('#content-img-list').html();
+      $('#content-img-list').html(oldBox + '<li class="content-img-list-item"><img src="'+imgSrc[a]+'" alt=""><a index="'+a+'" class="hide delete-btn">删除<i class="ico-delete"></i></a></li>');
+    }
+  }
+
+
+  // 读取上传的文件
+  $('#upload').on('change', function () {
+    // 控制上传图片大小、格式以及上传数量
+    if(imgSrc.length==4){
+      return alert("最多只能上传4张图片");
+    }
+    var imgSize = this.files[0].size;  //b
+    if(imgSize>1024*1024*1){//1M
+      return alert("上传图片不能超过1M");
+    }
+    if(this.files[0].type != 'image/png' && this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/gif'){
+      return alert("图片上传格式不正确");
+    }
+    // 设置图片等数组数据
+    var fileList = this.files;
+    console.log(fileList)
+    for(var i = 0; i < fileList.length; i++) {
+      var imgSrcI = getObjectURL(fileList[i]);
+      imgName.push(fileList[i].name);
+      imgSrc.push(imgSrcI);
+      imgFile.push(fileList[i]);
+    }
+    this.value = null; // 清空当前的图片，以便可以删除后再传
+    // 预览图片
+    addNewContent()
+  })
+
+  // 删除对应下标的图片
+  $(".content-img-list").on("click",'.content-img-list-item a',function(){
+    var index = $(this).attr("index");
+    imgSrc.splice(index, 1);
+    imgFile.splice(index, 1);
+    imgName.splice(index, 1);
+    addNewContent();
+    if(imgSrc.length<4){//显示上传按钮
+      $('.content-img .file').show();
+    }
+  });
+
+  $('#submit').on('click', function () {
+    if(imgFile.length===0) {
+      return alert('请选择图片')
+    }
+
+    var formFile = new FormData();
+    // $.each(imgFile, function(i, file){
+    //   formFile.append('myFile[]', file);
+    //   console.log('myFile[]',i,formFile)
+    // });
+    imgFile.forEach(function (item, index) {
+      formFile.append('file'+index, item);
+    });
+    formFile.append('picType', '1');
+
+    $.ajax({
+      url: '/upload/add-picture',
+      type: 'post',
+      data: formFile,
+      cache: false,
+      contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+      processData: false, // 告诉jQuery不要去处理发送的数据
+      // traditional:true,
+      dataType:'json',
+      success: function(res) {
+        console.log(res);
+      }
+    })
+
+  })
+  
+  // 查询图片
+  function searchPicture() {
+    let picType =$('#picType').val();
+    console.log(picType)
+    $.ajax({
+      url: '/picture/get-picture',
+      type: 'post',
+      data: 'picType='+picType,
+      dataType:'json',
+      success: function(res) {
+        if(res.code==='001') {
+          showPictures(res.data)
+        };
+      }
+    })
+  }
+  // 显示已上传的图片
+  /**
+   * arr 图片列表
+  */
+  function showPictures(arr) {
+    if(arr.length===0) return;
+    let content='';
+    arr.forEach(item=>{
+      content += `<li><img src="${item.picLink}" alt=""></li>`
+    })
+    $('#show-img-list').html(content)
+  }
+</script>
+{{/block}}
+
+
