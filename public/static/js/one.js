@@ -16,7 +16,7 @@ window.onload = function() {
         },
         autoplay:true,
 
-    })
+    });
     //弹出框
     $('.btn-lg').on('click',function() {
         var ur= $(this).parent("div").prev("img").attr('src');
@@ -84,3 +84,49 @@ window.onload = function() {
         $('body,html').animate({scrollTop:(one-50)},700);
     });
 };
+
+
+//请求图片
+function getImgList() {
+  $.ajax(
+    {
+      url:'/picture/get-pictureByCode',
+      type: 'post',
+      data: 'imageCode=peple',
+      dataType: 'json',
+      success:function (re) {
+        console.log(re);
+        putImg(re.data)
+      }
+    }
+  )
+};
+
+function putImg(list){
+    if(list.length===0){
+        return;
+    }
+    var imgin='';
+    for (var i = 0; i<list.length;i++) {
+        imgin += ' <div class="one-five-div1">\n' +
+          '                <img src='+list[i].picLink+' alt="">' +
+          '                <h3>Marcus Doe</h3>\n' +
+          '                <span>FOUNDER</span>\n' +
+          '                <p>Lorem ipsum dolor amet, tempor ut labore magna tempor dolore</p>' +
+          '                <div class="one-five-i">' +
+          '                    <a href="" class=" iconfont-first icon-firstfacebook"></a>' +
+          '                    <a href="" class=" iconfont-first icon-firsttwitter"></a>' +
+          '                    <a href="" class=" iconfont-first icon-firstyouxiang"></a>' +
+          '                </div>' +
+          '            </div>';
+    }
+    console.log(imgin);
+
+    $('.one-five-div').html(imgin);
+
+
+
+}
+
+getImgList()
+
