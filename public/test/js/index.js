@@ -64,4 +64,11 @@ $().ready(function () {
             password: {required: "请输入密码"}
         }
     });
+
+    $('.jzw').on('click',function () {
+        $('.jzw_i').toggleClass("icon-firstxuanzhong");
+    });
+
+
+
 });

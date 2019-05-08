@@ -12,6 +12,9 @@ userRouter.get('/user/register', userControllers.showRegister)
     .get('/login', async ctx => {
         ctx.render('login')
     })
+    .get('/index', async ctx => {
+        ctx.render('index')
+    })
     .get('/register', async ctx => {
         ctx.render('register')
     })

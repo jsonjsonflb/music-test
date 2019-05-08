@@ -7,7 +7,10 @@
     width: 80%;
     text-align: right;
     margin: 0 auto;
-
+}
+.jzw i{
+    margin-right: 5px;
+    font-size: 16px;
 }
 .container button{
     border: none;
@@ -64,6 +67,7 @@
 .log-form li{
     margin-top: 20px;
     position: relative;
+    vertical-align: middle;
 }
 .log-form li:first-child input,.log-form li:nth-child(2) input{
     width: 300px;
