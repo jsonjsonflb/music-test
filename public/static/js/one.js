@@ -96,17 +96,17 @@ function getImgList() {
       dataType: 'json',
       success:function (re) {
         console.log(re);
-        putImg(re.data)
+        putImg(re.data); //传入获取到的数据，执行这个方法
       }
     }
-  )
-};
-
+  );
+}
+//获取到图片，并动态创建元素
 function putImg(list){
     if(list.length===0){
         return;
     }
-    var imgin='';
+    var imgin=''; //定义一个变量装创建的元素
     for (var i = 0; i<list.length;i++) {
         imgin += ' <div class="one-five-div1">\n' +
           '                <img src='+list[i].picLink+' alt="">' +
@@ -121,12 +121,42 @@ function putImg(list){
           '            </div>';
     }
     console.log(imgin);
-
+//将循环创建的元素放入
     $('.one-five-div').html(imgin);
-
-
-
 }
 
-getImgList()
+//执行这个函数
+getImgList();
+
+//第六部分，获取获取，循环创建元素
+function getSixImg() {
+    $.ajax({
+        url:'',
+        type:'post',
+        data: 'imageCode=peple',
+        dataType: 'json',
+        success:function(result){
+            createSixImg(list.data);
+        }
+    });
+}
+
+function createSixImg(list) {
+    if(list.length===0){
+        return;
+    }
+    var imglist="";
+    for(i=0;i<list.length;i++){
+        imglist+='<div class="one-six-img1">' +
+            '                <img src='+list[i].picLink+' alt="">' +
+            '                <div class="one-six-imgdiv">' +
+            '                    <p>LATEST WORKS WORKS</p>' +
+            '                    <h5>LATEST WORKS</h5>' +
+            '                    <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">DETAILS</a>' +
+            '                </div>' +
+            '            </div>';
+    }
+}
+
+
 
