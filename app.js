@@ -1,7 +1,6 @@
 const Koa = require('koa');
 const convert = require('koa-convert');
 
-
 // const bodyParser = require('koa-bodyparser')
 
 // 引入router
@@ -41,13 +40,15 @@ app.use(error())
 
 // 重写URL
 let rewriteUrl = require('./middleware/rewriteUrl');
-
 app.use(rewriteUrl([
   {regex:/\/abc/,dist:'/index'},
   {regex:/\/public(.*)/,dist:null }, // dist:null 则使用.*  /public的内容
   {src:'/',dist:'/index'}
 ]));
 
+// 验证token
+let check = require('./middleware/checkToken')
+app.use(check)
 
 // 处理静态资源
 // 只有public能对外响应文件

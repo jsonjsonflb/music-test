@@ -1,6 +1,7 @@
 const path = require('path'); // 核心对象
 
 module.exports = {
+    secretToken: 'secretToken',
     staticDir: path.resolve('./public'),
     viewDir: path.join(__dirname, 'views'),
     uploadDir: path.resolve('./public/files'),

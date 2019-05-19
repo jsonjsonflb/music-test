@@ -1,5 +1,7 @@
 const userModel = require('../models/user');
 const captchapng = require('captchapng2'); // 验证码
+const jwt = require('jsonwebtoken');
+const secret = require('../config')
 
 /**
  * 处理 请求及业务*/
@@ -91,6 +93,14 @@ module.exports = {
   async doLogin(ctx, next) {
     // 接受参数
     let {username, password} = ctx.request.body;
+    if(username===''|| password==='') {
+      // 没有用户
+      ctx.body = {
+        // 返回模糊词，防止暴力试探用户名
+        code: '002', msg: '请输入用户名和密码'
+      };
+      return;
+    }
     // 2 查询用户名
     let users = await userModel.findUserDataByUsername(username);
     if(users.length===0) {
@@ -103,10 +113,20 @@ module.exports = {
     }
     // 3.对比密码
     let user = users[0]; // 注册控制不能存在相同的用户数据
+    // 帐号密码正确  创建token
+    //payload中写入一些值  time:创建日期  timeout：多长时间后过期
+    let payload = {userNumber:username.userNumber,time:new Date().getTime(),timeout:1000*60};
+    let token = jwt.sign(payload, secret.secretToken);
+
     if(user.password === password) {
       ctx.body = {
-        // 返回模糊词，防止暴力试探用户名
-        code: '001', msg: '登陆成功'
+        code: '001',
+        status: 0,
+        message: '登录成功',
+        data:{
+          token,
+          userInfo: user
+        }
       };
       ctx.session.user = user;
       // 挂载session,登陆认证
