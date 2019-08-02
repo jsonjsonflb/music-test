@@ -2,7 +2,6 @@ const Koa = require('koa');
 const convert = require('koa-convert');
 
 // const bodyParser = require('koa-bodyparser')
-
 // 引入router
 const musicRouter = require('./routes/music');
 const userRouter = require('./routes/user');
